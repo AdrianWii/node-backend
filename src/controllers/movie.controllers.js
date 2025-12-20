@@ -41,3 +41,24 @@ export const createMovie = async (req, res) => {
   console.log(`🎬 [MOVIE CREATED]`);
   res.status(201).json(movie);
 };
+
+export const incrementLikes = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    console.log(id);
+    const movie = await Movie.findByIdAndUpdate(
+      id,
+      { $inc: { likes: 1 } },
+      { new: true }
+    );
+    console.log(movie);
+    if (!movie) {
+      return res.status(404).json({ message: "Film nie znaleziony" });
+    }
+
+    res.status(200).json(movie);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
