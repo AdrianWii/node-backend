@@ -2,11 +2,18 @@ import express from 'express';
 import {serverLogger} from './middleware/middleware.js';
 import router from './routes/test.routes.js';
 import movieRoute from './routes/movies.routes.js';
+import cors from "cors";
+import "dotenv/config";
+import { connectMongoose } from "./db/mongoose.js";
 
 const app = express();
 
+app.use(cors())
+
+await connectMongoose();
+
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   if (req.method === "OPTIONS") return res.sendStatus(204);
