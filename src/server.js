@@ -5,6 +5,7 @@ import movieRoute from './routes/movies.routes.js';
 import cors from "cors";
 import "dotenv/config";
 import { connectMongoose } from "./db/mongoose.js";
+import { Movie } from "./models/Movie.js";
 
 const app = express();
 
